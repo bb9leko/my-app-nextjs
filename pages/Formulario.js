@@ -101,7 +101,7 @@ const Formulario = () => {
             const { value } = e.target;
             const formattedValue = value
               .replace(/\D/g, '') // Remove caracteres não numéricos
-              .replace(/(\d+)(\d{2})$/, '$1,$2'); // Adiciona a vírgula antes das duas últimas casas
+              .replace(/(\d+)(\d{2})$/, '$1.$2'); // Adiciona a vírgula antes das duas últimas casas
             setFormData({ ...formData, valorCorretagem: formattedValue });
           }}
           fullWidth
@@ -117,7 +117,7 @@ const Formulario = () => {
             const { value } = e.target;
             const formattedValue = value
               .replace(/\D/g, '') // Remove caracteres não numéricos
-              .replace(/(\d+)(\d{2})$/, '$1,$2'); // Adiciona a vírgula antes das duas últimas casas
+              .replace(/(\d+)(\d{2})$/, '$1.$2'); // Adiciona a vírgula antes das duas últimas casas
             setFormData({ ...formData, valorTaxasEmolumentos: formattedValue });
           }}
           fullWidth
@@ -133,7 +133,7 @@ const Formulario = () => {
             const { value } = e.target;
             const formattedValue = value
               .replace(/\D/g, '') // Remove caracteres não numéricos
-              .replace(/(\d+)(\d{2})$/, '$1,$2'); // Adiciona a vírgula antes das duas últimas casas
+              .replace(/(\d+)(\d{2})$/, '$1.$2'); // Adiciona a vírgula antes das duas últimas casas
             setFormData({ ...formData, valorUnitario: formattedValue });
           }}
           fullWidth
