@@ -1,6 +1,6 @@
-// pages/Formulario.js
 import React, { useState } from 'react';
 import { TextField, MenuItem, Button, Container, Typography } from '@mui/material';
+import styles from '../styles/Formulario.module.css';
 
 const Formulario = () => {
   const [formData, setFormData] = useState({
@@ -45,31 +45,10 @@ const Formulario = () => {
   };
 
   return (
-    <Container>
-      <Typography variant="h4">Formulário de Ações</Typography>
-      <form onSubmit={handleSubmit}>
-        <TextField
-          label="Data do Evento"
-          type="text"
-          name="dataEvento"
-          placeholder="dd/mm/yyyy"
-          value={formData.dataEvento}
-          onChange={(e) => {
-            const { value } = e.target;
-            const formattedValue = value
-              .replace(/\D/g, '') // Remove caracteres não numéricos
-              .replace(/(\d{2})(\d)/, '$1/$2') // Adiciona a primeira barra
-              .replace(/(\d{2})(\d)/, '$1/$2') // Adiciona a segunda barra
-              .slice(0, 10); // Limita o tamanho a 10 caracteres
-            setFormData({ ...formData, dataEvento: formattedValue });
-          }}
-          fullWidth
-          margin="normal"
-          required
-          inputProps={{
-            maxLength: 10, // Limita o número máximo de caracteres
-          }}
-        />
+    <Container className={styles.container}>
+      <Typography variant="h4" className={styles.title}>Formulário de Ações</Typography>
+      <form onSubmit={handleSubmit} className={styles.form}>
+        {/* Primeira linha: Ticket, Data do Evento */}
         <TextField
           label="Ticket"
           type="text"
@@ -79,8 +58,33 @@ const Formulario = () => {
           fullWidth
           margin="normal"
           required
-        >
-        </TextField>
+          className={styles.textField}
+        />
+        <TextField
+          label="Data do Evento"
+          type="text"
+          name="dataEvento"
+          placeholder="dd/mm/yyyy"
+          value={formData.dataEvento}
+          onChange={(e) => {
+            const { value } = e.target;
+            const formattedValue = value
+              .replace(/\D/g, '')
+              .replace(/(\d{2})(\d)/, '$1/$2')
+              .replace(/(\d{2})(\d)/, '$1/$2')
+              .slice(0, 10);
+            setFormData({ ...formData, dataEvento: formattedValue });
+          }}
+          fullWidth
+          margin="normal"
+          required
+          inputProps={{
+            maxLength: 10,
+          }}
+          className={styles.textField}
+        />
+
+        {/* Segunda linha: Quantidade, Valor Unitário */}
         <TextField
           label="Quantidade"
           type="number"
@@ -91,38 +95,7 @@ const Formulario = () => {
           margin="normal"
           required
           inputProps={{ min: 1, max: 9999 }}
-        />
-        <TextField
-          label="Valor da Corretagem"
-          type="text"
-          name="valorCorretagem"
-          value={formData.valorCorretagem}
-          onChange={(e) => {
-            const { value } = e.target;
-            const formattedValue = value
-              .replace(/\D/g, '') // Remove caracteres não numéricos
-              .replace(/(\d+)(\d{2})$/, '$1.$2'); // Adiciona a vírgula antes das duas últimas casas
-            setFormData({ ...formData, valorCorretagem: formattedValue });
-          }}
-          fullWidth
-          margin="normal"
-          required
-        />
-        <TextField
-          label="Valor das Taxas e Emolumentos"
-          type="text"
-          name="valorTaxasEmolumentos"
-          value={formData.valorTaxasEmolumentos}
-          onChange={(e) => {
-            const { value } = e.target;
-            const formattedValue = value
-              .replace(/\D/g, '') // Remove caracteres não numéricos
-              .replace(/(\d+)(\d{2})$/, '$1.$2'); // Adiciona a vírgula antes das duas últimas casas
-            setFormData({ ...formData, valorTaxasEmolumentos: formattedValue });
-          }}
-          fullWidth
-          margin="normal"
-          required
+          className={styles.textField}
         />
         <TextField
           label="Valor Unitário"
@@ -132,14 +105,53 @@ const Formulario = () => {
           onChange={(e) => {
             const { value } = e.target;
             const formattedValue = value
-              .replace(/\D/g, '') // Remove caracteres não numéricos
-              .replace(/(\d+)(\d{2})$/, '$1.$2'); // Adiciona a vírgula antes das duas últimas casas
+              .replace(/\D/g, '')
+              .replace(/(\d+)(\d{2})$/, '$1.$2');
             setFormData({ ...formData, valorUnitario: formattedValue });
           }}
           fullWidth
           margin="normal"
           required
-        />      
+          className={styles.textField}
+        />
+
+        {/* Terceira linha: Valor da Corretagem, Valor das Taxas e Emolumentos */}
+        <TextField
+          label="Valor da Corretagem"
+          type="text"
+          name="valorCorretagem"
+          value={formData.valorCorretagem}
+          onChange={(e) => {
+            const { value } = e.target;
+            const formattedValue = value
+              .replace(/\D/g, '')
+              .replace(/(\d+)(\d{2})$/, '$1.$2');
+            setFormData({ ...formData, valorCorretagem: formattedValue });
+          }}
+          fullWidth
+          margin="normal"
+          required
+          className={styles.textField}
+        />
+        <TextField
+          label="Valor das Taxas e Emolumentos"
+          type="text"
+          name="valorTaxasEmolumentos"
+          value={formData.valorTaxasEmolumentos}
+          onChange={(e) => {
+            const { value } = e.target;
+            const formattedValue = value
+              .replace(/\D/g, '')
+              .replace(/(\d+)(\d{2})$/, '$1.$2');
+            setFormData({ ...formData, valorTaxasEmolumentos: formattedValue });
+          }}
+          fullWidth
+          margin="normal"
+          required
+          className={styles.textField}
+        />
+
+        {/* Quarta linha: Compra ou Venda, Corretora */}
         <TextField
           label="Compra ou Venda"
           select
@@ -149,6 +161,7 @@ const Formulario = () => {
           fullWidth
           margin="normal"
           required
+          className={styles.textField}
         >
           <MenuItem value="COMPRA">Compra</MenuItem>
           <MenuItem value="VENDA">Venda</MenuItem>
@@ -162,13 +175,18 @@ const Formulario = () => {
           fullWidth
           margin="normal"
           required
+          className={styles.textField}
         >
           <MenuItem value="CLEAR">CLEAR</MenuItem>
           <MenuItem value="NUBANK">NUBANK</MenuItem>
           <MenuItem value="XP">XP</MenuItem>
-          <MenuItem value="BBDTVM">BBDTVM</MenuItem>          
+          <MenuItem value="BBDTVM">BBDTVM</MenuItem>
         </TextField>
-        <Button type="submit" variant="contained" color="primary">Enviar</Button>
+
+        {/* Botão Enviar */}
+        <Button type="submit" variant="contained" className={styles.button}>
+          Enviar
+        </Button>
       </form>
     </Container>
   );
