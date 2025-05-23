@@ -5,6 +5,7 @@ import styles from '../styles/Formulario.module.css';
 const Formulario = () => {
   const [formData, setFormData] = useState({
     dataEvento: '',
+    classificacaoAtivo: '',
     ticket: '',
     quantidade: '',
     valorCorretagem: '',
@@ -46,9 +47,25 @@ const Formulario = () => {
 
   return (
     <Container className={styles.container}>
-      <Typography variant="h4" className={styles.title}>Formulário de Ações</Typography>
+      <Typography variant="h4" className={styles.title}>Transações</Typography>
       <form onSubmit={handleSubmit} className={styles.form}>
         {/* Primeira linha: Ticket, Data do Evento */}
+        <TextField
+          label="Tipo Ativo"
+          select
+          name="classificacaoAtivo"
+          value={formData.tipoAtivo}
+          onChange={handleChange}
+          fullWidth
+          margin="normal"
+          required
+          className={styles.textField}
+        >
+          <MenuItem value="ACOES">Ações</MenuItem>
+          <MenuItem value="FIIS">FIIs</MenuItem>
+          <MenuItem value="ETFS">ETFs</MenuItem>
+          <MenuItem value="TESOURO_NACIONAL">Tesouro Nacional</MenuItem>          
+        </TextField>
         <TextField
           label="Ticket"
           type="text"
