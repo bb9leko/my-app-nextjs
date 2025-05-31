@@ -10,10 +10,14 @@ const Formulario = () => {
     quantidade: '',
     valorCorretagem: '',
     valorTaxasEmolumentos: '',
+    valorTaxaLiquidacao: '',
+    valorImpostos: '',
+    outrosValoresCobrados: '',
     valorUnitario: '',
     valorTotal: 0,
     compraOUVenda: '',
-    corretora: ''
+    corretora: '',
+    valorTotalComCustosEDespesas: 0
   });
 
   const handleChange = (e) => {
@@ -28,7 +32,7 @@ const Formulario = () => {
     e.preventDefault();
     try {
       const response = await fetch('http://localhost:8081/transacao/insereTransacao', {
-        method: 'PUT',
+        method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
@@ -54,7 +58,7 @@ const Formulario = () => {
           label="Tipo Ativo"
           select
           name="classificacaoAtivo"
-          value={formData.tipoAtivo}
+          value={formData.classificacaoAtivo}
           onChange={handleChange}
           fullWidth
           margin="normal"
@@ -101,7 +105,6 @@ const Formulario = () => {
           className={styles.textField}
         />
 
-        {/* Segunda linha: Quantidade, Valor Unitário */}
         <TextField
           label="Quantidade"
           type="number"
@@ -132,7 +135,6 @@ const Formulario = () => {
           className={styles.textField}
         />
 
-        {/* Terceira linha: Valor da Corretagem, Valor das Taxas e Emolumentos */}
         <TextField
           label="Valor da Corretagem"
           type="text"
@@ -168,7 +170,60 @@ const Formulario = () => {
           className={styles.textField}
         />
 
-        {/* Quarta linha: Compra ou Venda, Corretora */}
+        <TextField
+          label="Taxa de Liquidação"
+          type="text"
+          name="valorTaxaLiquidacao"
+          value={formData.valorTaxaLiquidacao}
+          onChange={(e) => {
+            const { value } = e.target;
+            const formattedValue = value
+              .replace(/\D/g, '')
+              .replace(/(\d+)(\d{2})$/, '$1.$2');
+            setFormData({ ...formData, valorTaxaLiquidacao: formattedValue });
+          }}
+          fullWidth
+          margin="normal"
+          required
+          className={styles.textField}
+        />
+
+        <TextField
+          label="Valor Impostos"
+          type="text"
+          name="valorImpostos"
+          value={formData.valorImpostos}
+          onChange={(e) => {
+            const { value } = e.target;
+            const formattedValue = value
+              .replace(/\D/g, '')
+              .replace(/(\d+)(\d{2})$/, '$1.$2');
+            setFormData({ ...formData, valorImpostos: formattedValue });
+          }}
+          fullWidth
+          margin="normal"
+          required
+          className={styles.textField}
+        />
+
+        <TextField
+          label="Outros Valores"
+          type="text"
+          name="outrosValoresCobrados"
+          value={formData.outrosValoresCobrados}
+          onChange={(e) => {
+            const { value } = e.target;
+            const formattedValue = value
+              .replace(/\D/g, '')
+              .replace(/(\d+)(\d{2})$/, '$1.$2');
+            setFormData({ ...formData, outrosValoresCobrados: formattedValue });
+          }}
+          fullWidth
+          margin="normal"
+          required
+          className={styles.textField}
+        />
+         
         <TextField
           label="Compra ou Venda"
           select
@@ -199,8 +254,7 @@ const Formulario = () => {
           <MenuItem value="XP">XP</MenuItem>
           <MenuItem value="BBDTVM">BBDTVM</MenuItem>
         </TextField>
-
-        {/* Botão Enviar */}
+        
         <Button type="submit" variant="contained" className={styles.button}>
           Enviar
         </Button>
